@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ListingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,4 +29,15 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+Route::middleware('auth')->group(function () {
+
+    Route::resource('listings', ListingController::class);
+
+    Route::get('listings/create/solo', [ListingController::class, 'createSolo'])
+        ->name('listings.create.solo');
+
+    Route::get('listings/create/project', [ListingController::class, 'createProject'])
+        ->name('listings.create.project');
+});
+
+require __DIR__ . '/auth.php';
