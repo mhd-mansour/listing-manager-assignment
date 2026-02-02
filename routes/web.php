@@ -40,4 +40,9 @@ Route::middleware('auth')->group(function () {
         ->name('listings.create.project');
 });
 
+// Route::post('/test-listing-store', function (\Illuminate\Http\Request $request) {
+//     return app(\App\Http\Controllers\ListingController::class)->store($request);
+// });
+
+
 require __DIR__ . '/auth.php';

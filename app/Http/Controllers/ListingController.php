@@ -33,7 +33,33 @@ class ListingController extends Controller
     {
         $this->authorize('create', Listing::class);
 
-        // i will add validation later 
+        $type = $request->input('type');
+
+        if ($type === 'solo') {
+            $data = $request->validate([
+                'title' => 'required|string|max:255',
+                'description' => 'nullable|string',
+                'rooms' => 'required|integer|min:0',
+                'bathrooms' => 'required|integer|min:0',
+                'space' => 'required|integer|min:0',
+                'thumbnail' => 'required|image|max:5120', // 5MB
+            ]);
+        } else { // project
+            $data = $request->validate([
+                'title' => 'required|string|max:255',
+                'description' => 'nullable|string',
+                'units' => 'required|integer|min:1',
+                'thumbnail' => 'required|image|max:5120', // 5MB
+            ]);
+        }
+
+        // Store thumbnail
+        $data['thumbnail'] = $request->file('thumbnail')->store('thumbnails', 'public');
+        $data['type'] = $type;
+
+        Listing::create($data);
+
+        return redirect()->route('listings.index')->with('success', 'Listing created!');
     }
 
     /**
