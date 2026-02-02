@@ -1,10 +1,4 @@
 <x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            Create Project Listing
-        </h2>
-    </x-slot>
-
     <div class="py-6 max-w-4xl mx-auto">
         <x-breadcrumb :items="[
             ['label' => 'Dashboard', 'url' => route('dashboard')],
@@ -70,10 +64,10 @@
                     <a href="{{ route('listings.index') }}" class="px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50">
                         Cancel
                     </a>
-                    <button type="button" id="nextBtn" onclick="switchToGallery()" class="px-4 py-2 bg-blue-600 border border-transparent rounded-md text-sm font-medium text-white hover:bg-blue-700">
+                    <button type="button" id="nextBtn" onclick="switchToGallery()" class="px-4 py-2 bg-gray-800 border border-transparent rounded-md text-sm font-medium text-white hover:bg-gray-900">
                         Next
                     </button>
-                    <button type="submit" id="submitBtn" class="hidden px-4 py-2 bg-green-600 border border-transparent rounded-md text-sm font-medium text-white hover:bg-green-700">
+                    <button type="submit" id="submitBtn" class="hidden px-4 py-2 bg-gray-800 border border-transparent rounded-md text-sm font-medium text-white hover:bg-gray-900">
                         Create Listing
                     </button>
                 </div>

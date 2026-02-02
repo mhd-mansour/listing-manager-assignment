@@ -1,10 +1,4 @@
 <x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ $listing->title }}
-        </h2>
-    </x-slot>
-
     <div class="py-6 max-w-4xl mx-auto px-4">
         <x-breadcrumb :items="[
             ['label' => 'Dashboard', 'url' => route('dashboard')],
@@ -24,18 +18,17 @@
                     </div>
                     <div class="flex space-x-2">
                         @can('update', $listing)
-                            <a href="{{ route('listings.edit', $listing) }}" class="inline-flex items-center bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-md text-sm font-medium">
-                                Edit
-                            </a>
+                            <x-primary-button onclick="window.location='{{ route('listings.edit', $listing) }}'">
+                                {{ __('Edit') }}
+                            </x-primary-button>
                         @endcan
                         @can('delete', $listing)
-                            <button type="button" onclick="showDeleteModal()" class="inline-flex items-center bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-md text-sm font-medium">
-                                Delete
-                            </button>
-                            <form id="deleteForm" method="POST" action="{{ route('listings.destroy', $listing) }}" class="hidden">
-                                @csrf
-                                @method('DELETE')
-                            </form>
+                            <x-danger-button 
+                                x-data="" 
+                                x-on:click.prevent="$dispatch('open-modal', 'confirm-listing-deletion')"
+                            >
+                                {{ __('Delete') }}
+                            </x-danger-button>
                         @endcan
                     </div>
                 </div>
@@ -92,38 +85,37 @@
 
             <!-- Footer -->
             <div class="px-6 py-4 bg-gray-50 border-t">
-                <a href="{{ route('listings.index') }}" class="text-blue-600 hover:text-blue-800 text-sm font-medium">
+                <a href="{{ route('listings.index') }}" class="text-gray-600 hover:text-gray-800 text-sm font-medium">
                     ← Back to Listings
                 </a>
             </div>
         </div>
     </div>
 
-    <!-- Delete Modal -->
-    <div id="deleteModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50">
-        <div class="flex items-center justify-center min-h-screen p-4">
-            <div class="bg-white rounded-lg p-6 w-full max-w-md">
-                <h3 class="text-lg font-medium text-gray-900 mb-4">Delete Listing</h3>
-                <p class="text-sm text-gray-600 mb-6">Are you sure you want to delete "{{ $listing->title }}"? This action cannot be undone.</p>
-                <div class="flex justify-end space-x-3">
-                    <button onclick="hideDeleteModal()" class="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200">
-                        Cancel
-                    </button>
-                    <button onclick="document.getElementById('deleteForm').submit()" class="px-4 py-2 text-sm font-medium text-white bg-red-600 rounded-md hover:bg-red-700">
-                        Delete
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
+    @can('delete', $listing)
+        <x-modal name="confirm-listing-deletion" focusable>
+            <form method="post" action="{{ route('listings.destroy', $listing) }}" class="p-6">
+                @csrf
+                @method('delete')
 
-    <script>
-        function showDeleteModal() {
-            document.getElementById('deleteModal').classList.remove('hidden');
-        }
-        
-        function hideDeleteModal() {
-            document.getElementById('deleteModal').classList.add('hidden');
-        }
-    </script>
+                <h2 class="text-lg font-medium text-gray-900">
+                    {{ __('Are you sure you want to delete this listing?') }}
+                </h2>
+
+                <p class="mt-1 text-sm text-gray-600">
+                    {{ __('Once this listing is deleted, all of its data will be permanently deleted.') }}
+                </p>
+
+                <div class="mt-6 flex justify-end">
+                    <x-secondary-button x-on:click="$dispatch('close')">
+                        {{ __('Cancel') }}
+                    </x-secondary-button>
+
+                    <x-danger-button class="ms-3">
+                        {{ __('Delete Listing') }}
+                    </x-danger-button>
+                </div>
+            </form>
+        </x-modal>
+    @endcan
 </x-app-layout>

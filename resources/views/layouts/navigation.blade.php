@@ -6,7 +6,7 @@
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
                     <a href="{{ route('dashboard') }}" class="flex items-center space-x-2">
-                        <img src="{{ asset('images/reterra-logo-light.png') }}" alt="Reterra" class="h-8 w-auto bg-gray-800 p-1 rounded">
+                        <img src="{{ asset('images/reterra-logo-light.png') }}" alt="Reterra" class="h-10 w-auto bg-gray-800 p-2 rounded">
                     </a>
                 </div>
 

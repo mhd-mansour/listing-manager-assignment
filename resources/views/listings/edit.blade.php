@@ -1,10 +1,4 @@
 <x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            Edit {{ ucfirst($listing->type) }} Listing
-        </h2>
-    </x-slot>
-
     <div class="py-6 max-w-4xl mx-auto">
         <x-breadcrumb :items="[
             ['label' => 'Dashboard', 'url' => route('dashboard')],
@@ -97,12 +91,12 @@
 
                 <!-- Form Actions -->
                 <div class="px-6 py-4 bg-gray-50 border-t flex justify-end space-x-3">
-                    <a href="{{ route('listings.show', $listing) }}" class="px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50">
-                        Cancel
-                    </a>
-                    <button type="submit" class="px-4 py-2 bg-blue-600 border border-transparent rounded-md text-sm font-medium text-white hover:bg-blue-700">
-                        Update Listing
-                    </button>
+                    <x-secondary-button onclick="window.location='{{ route('listings.show', $listing) }}'">
+                        {{ __('Cancel') }}
+                    </x-secondary-button>
+                    <x-primary-button type="submit">
+                        {{ __('Update Listing') }}
+                    </x-primary-button>
                 </div>
             </form>
         </div>
