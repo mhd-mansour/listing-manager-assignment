@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Storage;
 use App\Models\Listing;
 
 class ListingController extends Controller
@@ -108,6 +108,10 @@ class ListingController extends Controller
         }
 
         if ($request->hasFile('thumbnail')) {
+            // Delete old thumbnail
+            if ($listing->thumbnail) {
+                Storage::disk('public')->delete($listing->thumbnail);
+            }
             $data['thumbnail'] = $request->file('thumbnail')->store('thumbnails', 'public');
         }
 
@@ -122,6 +126,11 @@ class ListingController extends Controller
     public function destroy(Listing $listing)
     {
         $this->authorize('delete', $listing);
+        
+        // Delete thumbnail file
+        if ($listing->thumbnail) {
+            Storage::disk('public')->delete($listing->thumbnail);
+        }
         
         $listing->delete();
         

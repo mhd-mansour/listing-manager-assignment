@@ -6,6 +6,11 @@
     </x-slot>
 
     <div class="py-6 max-w-7xl mx-auto px-4">
+        <x-breadcrumb :items="[
+            ['label' => 'Dashboard', 'url' => route('dashboard')],
+            ['label' => 'Listings']
+        ]" />
+        
         @can('create', App\Models\Listing::class)
             <div class="mb-6 flex gap-3">
                 <a href="{{ route('listings.create.solo') }}" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium">

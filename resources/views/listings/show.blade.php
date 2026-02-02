@@ -6,6 +6,12 @@
     </x-slot>
 
     <div class="py-6 max-w-4xl mx-auto px-4">
+        <x-breadcrumb :items="[
+            ['label' => 'Dashboard', 'url' => route('dashboard')],
+            ['label' => 'Listings', 'url' => route('listings.index')],
+            ['label' => $listing->title]
+        ]" />
+        
         <div class="bg-white shadow rounded-lg overflow-hidden">
             <!-- Header -->
             <div class="px-6 py-4 border-b border-gray-200">

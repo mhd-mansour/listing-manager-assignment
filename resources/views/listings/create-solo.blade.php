@@ -6,6 +6,12 @@
     </x-slot>
 
     <div class="py-6 max-w-4xl mx-auto">
+        <x-breadcrumb :items="[
+            ['label' => 'Dashboard', 'url' => route('dashboard')],
+            ['label' => 'Listings', 'url' => route('listings.index')],
+            ['label' => 'Create Solo Listing']
+        ]" />
+        
         <div class="bg-white shadow rounded-lg">
             <form method="POST" action="{{ route('listings.store') }}" enctype="multipart/form-data">
                 @csrf
@@ -64,9 +70,12 @@
                 <div id="gallery-tab" class="tab-content p-6 hidden">
                     <div>
                         <label class="block text-sm font-medium text-gray-700">Thumbnail *</label>
-                        <input type="file" name="thumbnail" accept="image/*" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" required>
+                        <input type="file" name="thumbnail" accept="image/*" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" required onchange="previewImage(this)">
                         <p class="text-sm text-gray-500 mt-1">Maximum file size: 5MB</p>
                         @error('thumbnail') <p class="text-red-500 text-sm mt-1">{{ $message }}</p> @enderror
+                        <div id="preview" class="mt-3 hidden">
+                            <img id="preview-img" class="w-32 h-32 object-cover rounded border">
+                        </div>
                     </div>
                 </div>
 
@@ -87,6 +96,17 @@
     </div>
 
     <script>
+        function previewImage(input) {
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('preview-img').src = e.target.result;
+                    document.getElementById('preview').classList.remove('hidden');
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
         function switchToGallery() {
             document.querySelector('[data-tab="gallery"]').click();
         }
