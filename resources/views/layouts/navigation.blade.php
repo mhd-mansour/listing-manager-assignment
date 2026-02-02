@@ -5,8 +5,8 @@
             <div class="flex">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
-                    <a href="{{ route('dashboard') }}">
-                        <x-application-logo class="block h-9 w-auto fill-current text-gray-800" />
+                    <a href="{{ route('dashboard') }}" class="flex items-center space-x-2">
+                        <img src="{{ asset('images/reterra-logo-light.png') }}" alt="Reterra" class="h-8 w-auto bg-gray-800 p-1 rounded">
                     </a>
                 </div>
 
@@ -14,6 +14,9 @@
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('listings.index')" :active="request()->routeIs('listings.*')">
+                        {{ __('Listings') }}
                     </x-nav-link>
                 </div>
             </div>
@@ -69,6 +72,9 @@
         <div class="pt-2 pb-3 space-y-1">
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('listings.index')" :active="request()->routeIs('listings.*')">
+                {{ __('Listings') }}
             </x-responsive-nav-link>
         </div>
 

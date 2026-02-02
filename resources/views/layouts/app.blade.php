@@ -36,6 +36,15 @@
             <main>
                 {{ $slot }}
             </main>
+
+            <!-- Simple Toast -->
+            @if(session('success'))
+                <div id="toast" class="fixed top-4 right-4 bg-green-500 text-white px-4 py-2 rounded shadow z-50">
+                    ✓ {{ session('success') }}
+                    <button onclick="this.parentElement.remove()" class="ml-2">×</button>
+                </div>
+                <script>setTimeout(() => document.getElementById('toast')?.remove(), 3000);</script>
+            @endif
         </div>
     </body>
 </html>

@@ -61,7 +61,10 @@
                     <a href="{{ route('listings.index') }}" class="px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50">
                         Cancel
                     </a>
-                    <button type="submit" class="px-4 py-2 bg-blue-600 border border-transparent rounded-md text-sm font-medium text-white hover:bg-blue-700">
+                    <button type="button" id="nextBtn" onclick="switchToGallery()" class="px-4 py-2 bg-blue-600 border border-transparent rounded-md text-sm font-medium text-white hover:bg-blue-700">
+                        Next
+                    </button>
+                    <button type="submit" id="submitBtn" class="hidden px-4 py-2 bg-green-600 border border-transparent rounded-md text-sm font-medium text-white hover:bg-green-700">
                         Create Listing
                     </button>
                 </div>
@@ -70,6 +73,10 @@
     </div>
 
     <script>
+        function switchToGallery() {
+            document.querySelector('[data-tab="gallery"]').click();
+        }
+
         document.querySelectorAll('.tab-btn').forEach(btn => {
             btn.addEventListener('click', () => {
                 const tab = btn.dataset.tab;
@@ -87,6 +94,15 @@
                     content.classList.add('hidden');
                 });
                 document.getElementById(tab + '-tab').classList.remove('hidden');
+                
+                // Update buttons
+                if (tab === 'gallery') {
+                    document.getElementById('nextBtn').classList.add('hidden');
+                    document.getElementById('submitBtn').classList.remove('hidden');
+                } else {
+                    document.getElementById('nextBtn').classList.remove('hidden');
+                    document.getElementById('submitBtn').classList.add('hidden');
+                }
             });
         });
     </script>

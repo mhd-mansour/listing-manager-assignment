@@ -6,12 +6,6 @@
     </x-slot>
 
     <div class="py-6 max-w-7xl mx-auto px-4">
-        @if(session('success'))
-            <div class="mb-4 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded">
-                {{ session('success') }}
-            </div>
-        @endif
-
         @can('create', App\Models\Listing::class)
             <div class="mb-6 flex gap-3">
                 <a href="{{ route('listings.create.solo') }}" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium">
