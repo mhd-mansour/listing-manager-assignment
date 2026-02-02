@@ -24,17 +24,17 @@
                     </div>
                     <div class="flex space-x-2">
                         @can('update', $listing)
-                            <a href="{{ route('listings.edit', $listing) }}" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-md text-sm font-medium">
+                            <a href="{{ route('listings.edit', $listing) }}" class="inline-flex items-center bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-md text-sm font-medium">
                                 Edit
                             </a>
                         @endcan
                         @can('delete', $listing)
-                            <form method="POST" action="{{ route('listings.destroy', $listing) }}" class="inline" onsubmit="return confirm('Are you sure?')">
+                            <button type="button" onclick="showDeleteModal()" class="inline-flex items-center bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-md text-sm font-medium">
+                                Delete
+                            </button>
+                            <form id="deleteForm" method="POST" action="{{ route('listings.destroy', $listing) }}" class="hidden">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-md text-sm font-medium">
-                                    Delete
-                                </button>
                             </form>
                         @endcan
                     </div>
@@ -98,4 +98,32 @@
             </div>
         </div>
     </div>
+
+    <!-- Delete Modal -->
+    <div id="deleteModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50">
+        <div class="flex items-center justify-center min-h-screen p-4">
+            <div class="bg-white rounded-lg p-6 w-full max-w-md">
+                <h3 class="text-lg font-medium text-gray-900 mb-4">Delete Listing</h3>
+                <p class="text-sm text-gray-600 mb-6">Are you sure you want to delete "{{ $listing->title }}"? This action cannot be undone.</p>
+                <div class="flex justify-end space-x-3">
+                    <button onclick="hideDeleteModal()" class="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200">
+                        Cancel
+                    </button>
+                    <button onclick="document.getElementById('deleteForm').submit()" class="px-4 py-2 text-sm font-medium text-white bg-red-600 rounded-md hover:bg-red-700">
+                        Delete
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showDeleteModal() {
+            document.getElementById('deleteModal').classList.remove('hidden');
+        }
+        
+        function hideDeleteModal() {
+            document.getElementById('deleteModal').classList.add('hidden');
+        }
+    </script>
 </x-app-layout>
